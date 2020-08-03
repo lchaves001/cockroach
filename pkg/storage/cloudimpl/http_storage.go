@@ -200,6 +200,10 @@ func (r *resumingHTTPReader) sendRequest(
 			return nil, err
 		}
 	}
+	if r.ctx.Err() == nil {
+		return nil, errors.New("too many retries; giving up")
+	}
+
 	return nil, r.ctx.Err()
 }
 
